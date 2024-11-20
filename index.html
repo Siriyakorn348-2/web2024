@@ -7,81 +7,90 @@
     <style>
         body {
             font-family: 'Kanit', sans-serif;
-            background: linear-gradient(135deg, #fce4ec, #f8bbd0);
-            color: #555;
+            background-color: #ff69b4;
+            color: #fff;
             margin: 0;
             padding: 0;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
+            justify-content: center;
             height: 100vh;
-        }
-        .container {
             text-align: center;
         }
         h1 {
             font-size: 2.5em;
-            margin-bottom: 30px;
-            color: #e91e63;
-            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+            margin-bottom: 10px;
+            color: #ffd700;
+        }
+        h2 {
+            font-size: 1.2em;
+            color: #6a1b9a;
         }
         .tasks {
             display: flex;
             justify-content: center;
-            gap: 15px;
+            gap: 20px;
         }
         .task {
-            background: #fce4ec;
-            border: 2px solid #f8bbd0;
-            border-radius: 10px;
+            background: #fff;
+            border-radius: 20px;
             padding: 20px;
-            width: 120px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 200px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
             transition: transform 0.3s, box-shadow 0.3s;
         }
         .task:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+            transform: translateY(-10px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
         }
-        .task h2 {
-            font-size: 1.5em;
-            color: #ad1457;
-            margin: 0;
+        .task img {
+            width: 100px;
+            margin-bottom: 10px;
         }
         p {
-            font-size: 1.2em;
+            font-size: 1em;
             margin-top: 20px;
-            color: #880e4f;
+            color: #f8e1e7;
         }
-        @media (max-width: 768px) {
-            .tasks {
-                flex-direction: column;
-                gap: 10px;
-            }
-            .task {
-                width: 100px;
-                padding: 15px;
-            }
+        a {
+            display: inline-block;
+            margin-top: 10px;
+            color: #6a1b9a;
+            font-weight: bold;
+            text-decoration: none;
+            border: 2px solid #6a1b9a;
+            padding: 5px 10px;
+            border-radius: 10px;
+            transition: background 0.3s, color 0.3s;
+        }
+        a:hover {
+            background: #6a1b9a;
+            color: #fff;
         }
     </style>
 </head>
 <body>
-
-<div class="container">
     <h1>SC310006 Mobile and Web Application Development</h1>
+    <h2>By Siriyakorn Artyangkham 65338038-2 SEC2</h2>
     <div class="tasks">
         <div class="task">
+            <img src="https://via.placeholder.com/100" alt="งานที่ 1">
             <h2>งานที่ 1</h2>
+            <a href="#">→</a>
         </div>
         <div class="task">
+            <img src="https://via.placeholder.com/100" alt="งานที่ 2">
             <h2>งานที่ 2</h2>
+            <a href="#">→</a>
         </div>
         <div class="task">
+            <img src="https://via.placeholder.com/100" alt="งานที่ 3">
             <h2>งานที่ 3</h2>
+            <a href="#">→</a>
         </div>
     </div>
     <p>My name is Siriyakorn</p>
-</div>
-
 </body>
 </html>
