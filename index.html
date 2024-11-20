@@ -7,8 +7,8 @@
     <style>
         body {
             font-family: 'Kanit', sans-serif;
-            background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
-            color: #fff;
+            background: linear-gradient(135deg, #fce4ec, #f8bbd0);
+            color: #555;
             margin: 0;
             padding: 0;
             display: flex;
@@ -17,52 +17,50 @@
             height: 100vh;
         }
         .container {
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 15px;
-            padding: 20px 40px;
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
             text-align: center;
         }
         h1 {
             font-size: 2.5em;
-            margin-bottom: 20px;
-            color: #fff;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            margin-bottom: 30px;
+            color: #e91e63;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
         }
-        ul {
-            list-style-type: none;
-            padding: 0;
+        .tasks {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
         }
-        li {
-            font-size: 1.2em;
-            background: rgba(255, 255, 255, 0.3);
-            margin: 10px 0;
-            padding: 10px 15px;
-            border-radius: 8px;
-            transition: transform 0.3s, background 0.3s;
+        .task {
+            background: #fce4ec;
+            border: 2px solid #f8bbd0;
+            border-radius: 10px;
+            padding: 20px;
+            width: 120px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
         }
-        li:hover {
+        .task:hover {
             transform: translateY(-5px);
-            background: rgba(255, 255, 255, 0.5);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+        }
+        .task h2 {
+            font-size: 1.5em;
+            color: #ad1457;
+            margin: 0;
         }
         p {
-            font-size: 1.1em;
+            font-size: 1.2em;
             margin-top: 20px;
-            color: #fdfdfd;
-            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+            color: #880e4f;
         }
         @media (max-width: 768px) {
-            .container {
-                padding: 15px 20px;
+            .tasks {
+                flex-direction: column;
+                gap: 10px;
             }
-            h1 {
-                font-size: 2em;
-            }
-            li {
-                font-size: 1em;
-            }
-            p {
-                font-size: 1em;
+            .task {
+                width: 100px;
+                padding: 15px;
             }
         }
     </style>
@@ -71,14 +69,19 @@
 
 <div class="container">
     <h1>SC310006 Mobile and Web Application Development</h1>
-    <ul>
-        <li>งานที่ 1</li>
-        <li>งานที่ 2</li>
-        <li>งานที่ 3</li>
-    </ul>
+    <div class="tasks">
+        <div class="task">
+            <h2>งานที่ 1</h2>
+        </div>
+        <div class="task">
+            <h2>งานที่ 2</h2>
+        </div>
+        <div class="task">
+            <h2>งานที่ 3</h2>
+        </div>
+    </div>
     <p>My name is Siriyakorn</p>
 </div>
 
 </body>
 </html>
-
