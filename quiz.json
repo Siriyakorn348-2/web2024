@@ -1,0 +1,110 @@
+{
+    "subjects": [
+      {
+        "name": "คณิตศาสตร์",
+        "questions": [
+          {
+            "question": "5 + 3 = ?",
+            "options": ["8", "6", "7", "9"],
+            "answer": 0
+          },
+          {
+            "question": "12 x 4 = ?",
+            "options": ["48", "44", "50", "52"],
+            "answer": 0
+          },
+          {
+            "question": "9 - 4 = ?",
+            "options": ["5", "6", "4", "7"],
+            "answer": 0
+          },
+          {
+            "question": "16 ÷ 4 = ?",
+            "options": ["4", "5", "3", "2"],
+            "answer": 0
+          },
+          {
+            "question": "7 + 6 = ?",
+            "options": ["12", "14", "13", "15"],
+            "answer": 2
+          },
+          {
+            "question": "10 ÷ 2 = ?",
+            "options": ["4", "5", "3", "6"],
+            "answer": 1
+          },
+          {
+            "question": "14 - 7 = ?",
+            "options": ["6", "7", "5", "8"],
+            "answer": 0
+          },
+          {
+            "question": "5 x 6 = ?",
+            "options": ["30", "32", "35", "36"],
+            "answer": 0
+          },
+          {
+            "question": "20 ÷ 5 = ?",
+            "options": ["5", "6", "4", "3"],
+            "answer": 0
+          },
+          {
+            "question": "3 x 4 = ?",
+            "options": ["12", "14", "15", "11"],
+            "answer": 0
+          },
+          {
+            "question": "15 + 5 = ?",
+            "options": ["20", "18", "22", "25"],
+            "answer": 0
+          },
+          {
+            "question": "18 ÷ 6 = ?",
+            "options": ["3", "4", "5", "6"],
+            "answer": 0
+          },
+          {
+            "question": "9 + 7 = ?",
+            "options": ["16", "15", "14", "18"],
+            "answer": 0
+          },
+          {
+            "question": "8 x 2 = ?",
+            "options": ["16", "18", "14", "12"],
+            "answer": 0
+          },
+          {
+            "question": "21 ÷ 3 = ?",
+            "options": ["7", "6", "8", "9"],
+            "answer": 0
+          },
+          {
+            "question": "5 + 9 = ?",
+            "options": ["15", "14", "13", "12"],
+            "answer": 1
+          },
+          {
+            "question": "12 ÷ 3 = ?",
+            "options": ["3", "4", "5", "6"],
+            "answer": 1
+          },
+          {
+            "question": "4 x 7 = ?",
+            "options": ["28", "29", "27", "30"],
+            "answer": 0
+          },
+          {
+            "question": "8 + 5 = ?",
+            "options": ["13", "14", "12", "15"],
+            "answer": 0
+          },
+          {
+            "question": "7 x 3 = ?",
+            "options": ["21", "22", "20", "19"],
+            "answer": 0
+          }
+        ]
+      }
+    ]
+  }
+  
