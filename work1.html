@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>work 1: แบบทดสอบคณิตศาสตร์ อนุบาล 2</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <style>
+        body {
+        background-color: #fff5f7;
+        font-family: 'Arial', sans-serif;
+    }
+
+    .container-fluid {
+        background: linear-gradient(to right, #ffb3c1, #ffcdd2);
+        padding: 40px 0;
+    }
+
+    .container-fluid h1 {
+        font-size: 2.5rem;
+        font-weight: bold;
+    }
+
+    #btnStart, #btnCheckAnswer {
+        background-color: #ff6f91;
+        color: white;
+        margin-top: 20px;
+        border: none;
+        padding: 15px 30px;
+        font-size: 1.2rem;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+    }
+
+    #btnStart:hover, #btnCheckAnswer:hover {
+        background-color: #ff4f7f;
+    }
+
+    #quizListBox {
+        background-color: #ffffff;
+        border-radius: 10px;
+        padding: 20px;
+        margin: 20px auto;
+        width: 80%;
+        max-width: 1200px;
+        box-sizing: border-box;
+    }
+
+    #quizListBox div {
+        margin-bottom: 10px;
+        padding: 5px;
+        background-color: #ffffff;
+        border-radius: 8px;
+    }
+
+    .form-check {
+        margin-bottom: 8px; 
+        padding-left: 10px; 
+    }
+
+    .form-check label {
+        font-size: 1.1rem;
+        margin-left: 5px; 
+    }
+
+    #btnCheckAnswer {
+        display: block;
+        margin: 30px auto;
+    }
+
+    .modal-header, .modal-footer {
+        background-color: #ff8ba7;
+    }
+
+    .modal-title, .modal-body, .modal-footer button {
+        color: #5a2d41;
+    }
+
+    .modal-body h3, .modal-body .display-4 {
+        color: #d46a76;
+    }
+
+    .quiz-question {
+        font-size: 1.2rem;
+        font-weight: bold;
+        margin-bottom: 5px; 
+    }
+
+    .option-class {
+        box-shadow: none;
+    }
+
+  </style>
+  
+    
+</head>
+
+<body>
+
+    <div class="container-fluid p-5 text-white text-center">
+        <h1>แบบทดสอบคณิตศาสตร์ อนุบาล 2</h1>
+    </div>
+
+    <div class="container mt-5 p-5">
+        <div class="row justify-content-center" id="startBox">
+            <button class="btn btn-lg" id="btnStart">เริ่มทำแบบทดสอบ</button>
+        </div>
+        <div class="row" id="quizBox">
+            <div id="quizListBox" class="col-md-8 offset-md-2">
+            </div>
+            <button class="btn btn-lg" id="btnCheckAnswer">ตรวจคำตอบ</button>
+        </div>
+    </div>
+
+    
+    <div class="modal fade" id="scoreModal" tabindex="-1" aria-labelledby="scoreModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="scoreModalLabel">ผลการทดสอบ</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <h3>คุณได้คะแนน:</h3>
+                    <div class="display-4" id="scoreDisplay"></div>
+                    <p>ขอบคุณที่ทำแบบทดสอบ!</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ปิด</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(function () {
+            $("#quizBox").hide();
+            $("#btnCheckAnswer").hide();
+            $("#btnStart").click(function () {
+                $("#startBox").hide();
+                $("#quizBox").show();
+                displayQuizList();
+                $("#btnCheckAnswer").show();
+            });
+
+            
+            $("#btnCheckAnswer").click(function () {
+                checkAnswers();
+            });
+        });
+
+        function displayQuizList() {
+            $("#quizListBox").html("");
+            for (var i in quizlist) {
+                displayQuiz(i, quizlist[i]);
+            }
+        }
+
+        function displayQuiz(i, q) {
+            var no = parseInt(i) + 1;
+            $("#quizListBox").append("<div class='p-3 mb-3'><strong>ข้อที่ " + no + ":</strong> " + q.question + "<br>");
+            for (var c in q.options) {
+                var v = parseInt(c);
+                $("#quizListBox").append("<div class='form-check'>");
+                $("#quizListBox").append("<input class='form-check-input' type='radio' name='q" + no + "' value='" + v + "' id='q" + no + "_" + v + "'>");
+                $("#quizListBox").append("<label class='form-check-label' for='q" + no + "_" + v + "'>" + (v + 1) + ". " + q.options[c] + "</label>");
+                $("#quizListBox").append("</div>");
+            }
+            $("#quizListBox").append("</div>");
+        }
+
+        
+        function checkAnswers() {
+            var score = 0;
+            for (var i in quizlist) {
+                var no = parseInt(i) + 1;
+                var correctAnswer = quizlist[i].answer;
+                var userAnswer = $("input[name='q" + no + "']:checked").val();
+
+                if (parseInt(userAnswer) === correctAnswer) {
+                    score++;
+                }
+            }
+            
+           
+            $("#scoreDisplay").text(score + " / " + quizlist.length);
+            $("#scoreModal").modal('show');
+        }
+
+       
+        var quizlist = [
+        {
+            "question": "5 + 3 = ?",
+            "options": ["8", "6", "7", "9"],
+            "answer": 0
+          },
+          {
+            "question": "12 x 4 = ?",
+            "options": ["48", "44", "50", "52"],
+            "answer": 0
+          },
+          {
+            "question": "9 - 4 = ?",
+            "options": ["5", "6", "4", "7"],
+            "answer": 0
+          },
+          {
+            "question": "16 ÷ 4 = ?",
+            "options": ["4", "5", "3", "2"],
+            "answer": 0
+          },
+          {
+            "question": "7 + 6 = ?",
+            "options": ["12", "14", "13", "15"],
+            "answer": 2
+          },
+          {
+            "question": "10 ÷ 2 = ?",
+            "options": ["4", "5", "3", "6"],
+            "answer": 1
+          },
+          {
+            "question": "14 - 7 = ?",
+            "options": ["6", "7", "5", "8"],
+            "answer": 0
+          },
+          {
+            "question": "5 x 6 = ?",
+            "options": ["30", "32", "35", "36"],
+            "answer": 0
+          },
+          {
+            "question": "20 ÷ 5 = ?",
+            "options": ["5", "6", "4", "3"],
+            "answer": 0
+          },
+          {
+            "question": "3 x 4 = ?",
+            "options": ["12", "14", "15", "11"],
+            "answer": 0
+          },
+          {
+            "question": "15 + 5 = ?",
+            "options": ["20", "18", "22", "25"],
+            "answer": 0
+          },
+          {
+            "question": "18 ÷ 6 = ?",
+            "options": ["3", "4", "5", "6"],
+            "answer": 0
+          },
+          {
+            "question": "9 + 7 = ?",
+            "options": ["16", "15", "14", "18"],
+            "answer": 0
+          },
+          {
+            "question": "8 x 2 = ?",
+            "options": ["16", "18", "14", "12"],
+            "answer": 0
+          },
+          {
+            "question": "21 ÷ 3 = ?",
+            "options": ["7", "6", "8", "9"],
+            "answer": 0
+          },
+          {
+            "question": "5 + 9 = ?",
+            "options": ["12", "13", "14", "15"],
+            "answer": 2
+          },
+          {
+            "question": "4 x 4 = ?",
+            "options": ["16", "14", "12", "18"],
+            "answer": 0
+          },
+          {
+            "question": "20 - 10 = ?",
+            "options": ["10", "9", "11", "12"],
+            "answer": 0
+          },
+          {
+            "question": "3 x 5 = ?",
+            "options": ["15", "14", "12", "16"],
+            "answer": 0
+          },
+          {
+            "question": "9 ÷ 3 = ?",
+            "options": ["3", "4", "5", "2"],
+            "answer": 0
+          },
+          {
+            "question": "6 + 8 = ?",
+            "options": ["14", "15", "13", "16"],
+            "answer": 0
+          },
+          {
+            "question": "12 - 5 = ?",
+            "options": ["7", "6", "8", "9"],
+            "answer": 0
+          },
+          {
+            "question": "2 x 7 = ?",
+            "options": ["14", "12", "15", "13"],
+            "answer": 0
+          },
+          {
+            "question": "8 + 6 = ?",
+            "options": ["14", "13", "12", "15"],
+            "answer": 0
+          },
+          {
+            "question": "18 ÷ 2 = ?",
+            "options": ["9", "8", "7", "10"],
+            "answer": 0
+          }
+        ]
+    </script>
+
+</body>
+
+</html>
