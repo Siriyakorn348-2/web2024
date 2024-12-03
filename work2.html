@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>แบบทดสอบ</title>
+  
+  <script src="https://cdn.jsdelivr.net/npm/vue@3.2.45"></script>
+  <link href="https://cdn.jsdelivr.net/npm/@mdi/font/css/materialdesignicons.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/vuetify@3.2.0/dist/vuetify.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/vuetify@3.2.0/dist/vuetify.min.js"></script>
+
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #121212;
+      color: #f0f0f0;
+      margin: 0;
+      padding: 0;
+    }
+    h1, h2 {
+      text-align: center;
+      color: #ff79c6;
+      font-family: 'Arial', sans-serif;
+    }
+    .start-button-container {
+      text-align: center;
+      padding-top: 20px;
+    }
+    .image-container img {
+      max-width: 60%;
+      height: auto;
+      border-radius: 12px;
+      box-shadow: 0 8px 12px rgba(255, 105, 180, 0.6);
+      margin-top: 20px;
+    }
+    .text-center {
+      text-align: center;
+    }
+    .question {
+      background-color: #fffefe;
+      padding: 20px;
+      margin: 20px 0;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(255, 105, 180, 0.7);
+    }
+    .question h5 {
+      color: #ff79c6;
+    }
+    .question label {
+      color: #000000;
+      font-size: 18px;
+    }
+    button {
+      background-color: #ff79c6;
+      color: #121212;
+      padding: 12px 25px;
+      font-size: 18px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      margin-top: 20px;
+    }
+    button:hover {
+      background-color: #ff85c8;
+    }
+    .result-container {
+      margin-top: 30px;
+    }
+    .result-container h2 {
+      color: #ff79c6;
+    }
+    .pa-4 {
+      padding: 20px;
+    }
+    .bg-success {
+      background-color: #ff79c6;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <v-app>
+      <!-- หน้าแรก: ปุ่มเริ่มต้น -->
+      <h1>คุณรู้จัก BLACKPINK ดีแค่ไหน</h1>
+      <div v-if="page === 1" class="text-center pa-4" style="background-color: #ff69b4; color: #fff; border-radius: 12px;">
+        <!-- แสดงภาพ -->
+        <div class="image-container">
+          <img src="https://pbs.twimg.com/media/FaA9K1LacAAZ5lP.jpg:large" alt="BLACKPINK Image">
+        </div>
+        <!-- ปุ่มเริ่มต้น -->
+        <v-btn @click="page = 2" color="#000000" dark style="color: #ff79c6;">เริ่มทำแบบทดสอบ</v-btn>
+      </div>
+  
+      <!-- หน้า 2: คำถาม -->
+      <div v-if="page === 2" class="pa-4">
+        <div v-for="(q, i) in qlist" :key="i" class="question">
+          <h5>ข้อที่ {{ i + 1 }}: {{ q.title }}</h5>
+          <v-radio-group v-model="answers[i]" class="mt-3">
+            <v-radio v-for="(otxt, ov) in q.options" :key="ov" :label="otxt" :value="ov + 1"></v-radio>
+          </v-radio-group>
+        </div>
+  
+        <div class="text-center">
+          <v-btn v-if="validate()" @click="grading" color="success">
+            <v-icon>mdi-check</v-icon> ส่งคำตอบ
+          </v-btn>
+          <div v-else class="text-red">กรุณาตอบให้ครบทุกข้อ</div>
+        </div>
+      </div>
+  
+      <!-- หน้า 3: ผลลัพธ์ -->
+      <div v-if="page === 3" class="result-container">
+        <h2>คุณได้คะแนน {{ score }} / {{ qlist.length }}</h2>
+        <div class="text-center">
+        <v-btn @click="page = 1" color="#000000" dark style="color: #ff79c6;">ทำแบบทดสอบใหม่</v-btn>
+      </div>
+    </div>
+    </v-app>
+  </div>
+
+  <script>
+    const { createApp } = Vue;
+    const { createVuetify } = Vuetify;
+
+    const vuetify = createVuetify();
+    const app = createApp({
+      data() {
+        return {
+          qlist: [],
+          answers: [],
+          score: 0,
+          page: 1,
+        };
+      },
+      mounted() {
+        this.load_data();
+      },
+      methods: {
+        async load_data() {
+          try {
+            const res = await fetch("quiz2.json");
+            if (res.ok) {
+              this.qlist = await res.json();
+              this.answers = new Array(this.qlist.length).fill(null); 
+            } else {
+              console.error("ไม่สามารถโหลดไฟล์ quiz2.json ได้");
+            }
+          } catch (error) {
+            console.error("Error loading JSON:", error);
+          }
+        },
+        validate() {
+          return this.answers.every(answer => answer !== null);
+        },
+        grading() {
+          this.score = this.answers.reduce((acc, answer, index) => {
+            return acc + (answer === this.qlist[index].answer ? 1 : 0);
+          }, 0);
+          this.page = 3;
+        }
+      }
+    });
+
+    app.use(vuetify);
+    app.mount('#app');
+  </script>
+</body>
+</html>
