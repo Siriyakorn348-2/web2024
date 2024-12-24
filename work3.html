@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <style>
+      body {
+
+        font-family: Arial, sans-serif;
+        margin: 20px;
+        background-color: #000;
+        color: #ff69b4;
+
+      }
+      .card {
+        background-color: #1a1a1a;
+        padding: 20px;
+        border-radius: 8px;
+        margin: 20px auto;
+        max-width: 600px;
+        box-shadow: 0 0 10px rgba(255, 105, 180, 0.5);
+
+      }
+      .card-header {
+        background-color: #ff006e;
+        color: #fff;
+        font-size: 1.25rem;
+      }
+      .card-footer {
+        background-color: #2c2c2c;
+        color: #ff80ab;
+        text-align: center;
+        font-size: 0.9rem;
+      }
+      .btn-primary {
+        background-color: #ff006e;
+        border-color: #ff006e;
+      }
+      .btn-primary:hover {
+        background-color: #d1005c;
+        border-color: #d1005c;
+      }
+      .btn-success {
+        background-color: #80ed99;
+        border-color: #80ed99;
+        color: #000;
+      }
+      .btn-success:hover {
+        background-color: #6ede82;
+        border-color: #6ede82;
+      }
+      .list-group-item {
+        background-color: #2c2c2c;
+        color: #fff;
+        border: 1px solid #444;
+        cursor: pointer;
+      }
+      .list-group-item.active {
+        background-color: #ff006e;
+        border-color: #ff006e;
+        color: #fff;
+      }
+      h5 {
+        color: #ff80ab;
+      }
+    </style>
+    <title>Work3 - แบบทดสอบ Online</title>
+  </head>
+  <body>
+    <div id="myapp" class="container p-4"></div>
+    <script type="text/babel">
+      class App extends React.Component {
+        constructor(props) {
+          super(props);
+          this.state = {
+            quizData: [],
+            currentQuestionIndex: 0,
+            selectedAnswers: {},
+            score: null,
+          };
+        }
+
+        componentDidMount() {
+          fetch("quiz3.json")
+            .then((response) => response.json())
+            .then((data) => this.setState({ quizData: data }));
+        }
+
+        handleAnswerSelect = (index) => {
+          this.setState((prevState) => ({
+            selectedAnswers: {
+              ...prevState.selectedAnswers,
+              [prevState.currentQuestionIndex]: index,
+            },
+          }));
+        };
+
+        handleNextQuestion = () => {
+          this.setState((prevState) => ({
+            currentQuestionIndex: prevState.currentQuestionIndex + 1,
+          }));
+        };
+
+        handleCheckAnswers = () => {
+          const { quizData, selectedAnswers } = this.state;
+          let score = 0;
+          quizData.forEach((question, index) => {
+            if (selectedAnswers[index] === question.answer - 1) {
+              score++;
+            }
+          });
+          this.setState({ score });
+        };
+
+        render() {
+          const { quizData, currentQuestionIndex, selectedAnswers, score } = this.state;
+          const currentQuestion = quizData[currentQuestionIndex];
+
+          if (score !== null) {
+            return (
+              <div className="card">
+                <div className="card-header">
+                  <b>ผลการทำแบบทดสอบ</b>
+                </div>
+                <div className="card-body">
+                    <h4 style={{ color: '#fff' }}>คุณได้คะแนน {score} / {quizData.length}</h4>
+                </div>
+              </div>
+            );
+          }
+
+          return (
+            <div className="card">
+              <div className="card-header">
+                <b>Work3: แบบทดสอบ Online</b>
+              </div>
+              <div className="card-body">
+                {currentQuestion ? (
+                  <div>
+                    <h5>{currentQuestionIndex + 1}. {currentQuestion.title}</h5>
+                    <ul className="list-group">
+                      {currentQuestion.options.map((option, index) => (
+                        <li
+                          key={index}
+                          className={`list-group-item ${
+                            selectedAnswers[currentQuestionIndex] === index ? "active" : ""
+                          }`}
+                          onClick={() => this.handleAnswerSelect(index)}
+                        >
+                          {option}
+                        </li>
+                      ))}
+                    </ul>
+                    <div className="mt-3">
+                      {currentQuestionIndex < quizData.length - 1 ? (
+                        <button
+                            className="btn btn-primary"
+                            onClick={this.handleNextQuestion}
+                            disabled={selectedAnswers[currentQuestionIndex] === undefined}
+                            >
+                            ข้อถัดไป
+                        </button>
+
+                      ) : (
+                        <button
+                            className="btn btn-success"
+                            onClick={this.handleCheckAnswers}
+                            disabled={Object.keys(selectedAnswers).length !== quizData.length}
+                            >
+                            ตรวจคำตอบ
+                        </button>
+
+                      )}
+                    </div>
+                  </div>
+                ) : (
+                  <p>กำลังโหลดข้อมูลแบบทดสอบ...</p>
+                )}
+              </div>
+              <div className="card-footer">
+                By 653380348-2 Siriyakorn Artyangkam <br />
+                College of Computing, Khon Kaen University
+              </div>
+            </div>
+          );
+        }
+      }
+
+      const container = document.getElementById("myapp");
+      const root = ReactDOM.createRoot(container);
+      root.render(<App />);
+    </script>
+  </body>
+</html>
