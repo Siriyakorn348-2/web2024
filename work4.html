@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/c-frame/aframe-extras@7.5.4/dist/aframe-extras.min.js"></script>
+    <title>แนะนำตัวใน A-Frame</title>
+  </head>
+  <body>
+    <a-scene shadow="type: basic" background="color: #E0F7FA">
+
+
+      <a-sky src="https://cdn.aframe.io/360-image-gallery-boilerplate/img/sechelt.jpg"></a-sky>
+      <a-light type="directional" color="#fff" intensity="1.5" position="0 5 5" cast-shadow></a-light>
+      <a-light type="ambient" color="#F0E68C" intensity="0.7"></a-light>
+      <a-plane position="0 -0.1 -4" rotation="-90 0 0" width="20" height="20" color="#090600" shadow></a-plane>
+
+      
+      <a-entity gltf-model="https://cdn.glitch.global/e611e629-7553-4dc1-8926-8ea078b5255a/phoenix_bird.glb?v=1736694220626"
+                position="0 2 -3" scale="0.003 0.003 0.003" 
+                animation-mixer="clip: Take 001"
+                shadow="cast: true; receive: false">
+      </a-entity>
+
+   
+      <a-entity>
+        <a-plane position="0 1 -3.01" width="4" height="1" color="#FFFFFF" opacity="0.8" material="shader: flat;"></a-plane>
+        <a-text value="653380348-2\nSiriyakorn Artyangkam\nBachelor of Science (Computer Science)"
+        position="0 1 -3"  
+        color="#000" width="4" align="center"></a-text>
+      </a-entity>
+
+    
+      <a-sphere position="-2 1.5 -5" radius="0.5" color="#FFD700"
+                animation="property: position; to: -2 3 -5; dur: 2000; dir: alternate; loop: true" shadow></a-sphere>
+      <a-torus position="2 1.5 -5" radius="0.6" radius-tubular="0.1" color="#FF4500"
+               animation="property: rotation; to: 0 360 0; dur: 3000; loop: true" shadow></a-torus>
+
+    
+      <a-entity particle-system="preset: snow; color: #FFFFFF; particleCount: 200; size: 0.5; speed: 1"></a-entity>
+
+     
+      <a-box position="0 0.5 -6" width="1" height="1" depth="1" color="#6495ED"
+             animation="property: rotation; to: 360 360 0; dur: 4000; loop: true"
+             event-set__mouseenter="scale: 1.2 1.2 1.2"
+             event-set__mouseleave="scale: 1 1 1"></a-box>
+
+    </a-scene>
+  </body>
+</html>
